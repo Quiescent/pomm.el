@@ -221,6 +221,11 @@ If nil, the clock in happens after the first command."
   :group 'pomm
   :type 'boolean)
 
+(defcustom pomm-display-timer t
+  "Display a timer on the modeline indicating remaining time."
+  :group 'pomm
+  :type 'boolean)
+
 (defvar pomm--state nil
   "The current state of the Pomodoro timer.
 
@@ -515,7 +520,9 @@ paused-time := now - last-changed-time"
                  (if (eq current-status 'paused)
                      ":paused"
                    ""))
-                (format-seconds pomm-remaining-time-format time-remaining))))))
+                (if pomm-display-timer
+                    (format-seconds pomm-remaining-time-format time-remaining)
+                  ""))))))
 
 (defun pomm-update-mode-line-string ()
   "Update the modeline string for the pomodoro timer.
